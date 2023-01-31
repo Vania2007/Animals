@@ -18,6 +18,7 @@ namespace Animals
                 new Omnivore(){ID = 976, Name = "Bear", Distance = 30, Mass = 500}
             };
             string nameFile = "input.txt";
+            string nameFileOut = "output.txt";
             // A
             animals.Sort();
 
@@ -41,12 +42,13 @@ namespace Animals
             }
             Console.WriteLine(" ");
             // D
-            ReadInfo(nameFile);
+            //ReadInfo(nameFile);
+            WriteInfoInFile(nameFileOut);
         }
 
-        public static void ReadInfo(string path)
+        public static void ReadInfo(string pasword)
         {
-            StreamReader sr = new StreamReader(path);
+            StreamReader sr = new StreamReader(pasword);
             List<Animals> animals = new List<Animals>();
             while (true)
             {
@@ -81,6 +83,20 @@ namespace Animals
                 }
             }
             sr.Close();
+        }
+        public static void WriteInfoInFile(string pasword)
+        {
+            List<Animals> animals = new List<Animals>();
+            StreamWriter sw = new StreamWriter(pasword);
+            foreach (var item in animals)
+            {
+                string type = "none";
+                if (item is Predator) type = "Predator";
+                else if (item is Herbivorous) type = "Herbivorous";
+                else if (item is Omnivore) type = "Omnivore";
+                sw.WriteLine($"{item.Name} {item.Mass} {item.Distance} {type}");
+            }
+            sw.Close();
         }
     } 
 }
